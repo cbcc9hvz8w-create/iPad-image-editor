@@ -1,12 +1,12 @@
-const APP_VERSION = "v1.2.0"; // build:version
+const APP_VERSION = "v1.3.0"; // build:version
 const CACHE_PREFIX = "snapcanvas-shell-";
 const CACHE_NAME = `${CACHE_PREFIX}${APP_VERSION}`;
 const META_CACHE = "snapcanvas-update-meta";
 const SELECTED_KEY = "./__selected_shell__";
 const PRECACHE = [
   "./.nojekyll",
-  "./assets/pages-CxRUBLfF.js",
-  "./assets/pages-DSyhHa30.css",
+  "./assets/pages--VzJZyWS.js",
+  "./assets/pages-Di5R5kz-.css",
   "./favicon.svg",
   "./icons/app-icon.svg",
   "./icons/apple-touch-icon.png",
@@ -47,6 +47,9 @@ self.addEventListener("install", (event) => {
     // addAll is atomic from the update flow's point of view: a failed install
     // never replaces the currently active worker or selected stable cache.
     await cache.addAll(PRECACHE);
+    // Once every required file is safely cached, activate the complete release
+    // without leaving iPad users on an older waiting worker.
+    await self.skipWaiting();
   })());
 });
 
@@ -73,10 +76,19 @@ self.addEventListener("message", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil((async () => {
     const existing = (await shellCaches()).filter((name) => name !== CACHE_NAME).slice().reverse();
+    const upgraded = existing.length > 0;
     const keep = new Set([CACHE_NAME, ...existing.slice(0, 1)]);
     await Promise.all((await shellCaches()).filter((name) => !keep.has(name)).map((name) => caches.delete(name)));
     await selectCache(CACHE_NAME);
     await self.clients.claim();
+    if (upgraded) {
+      const windows = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+      await Promise.all(windows.map((client) => {
+        const url = new URL(client.url);
+        url.searchParams.set("updated", APP_VERSION);
+        return client.navigate(url.href).catch(() => null);
+      }));
+    }
   })());
 });
 
