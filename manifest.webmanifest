@@ -1,0 +1,20 @@
+{
+  "name": "SnapCanvas — iPad画像編集",
+  "short_name": "SnapCanvas",
+  "description": "端末の中だけで画像を編集・保存できるiPad向けオフラインPWA",
+  "lang": "ja",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "any",
+  "background_color": "#f7f8fa",
+  "theme_color": "#f7f8fa",
+  "categories": ["photo", "utilities", "productivity"],
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icons/app-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
