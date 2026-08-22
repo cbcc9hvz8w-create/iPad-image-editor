@@ -1,12 +1,12 @@
-const APP_VERSION = "v1.8.0"; // build:version
+const APP_VERSION = "v1.9.1"; // build:version
 const CACHE_PREFIX = "snapcanvas-shell-";
 const CACHE_NAME = `${CACHE_PREFIX}${APP_VERSION}`;
 const META_CACHE = "snapcanvas-update-meta";
 const SELECTED_KEY = "./__selected_shell__";
 const PRECACHE = [
   "./.nojekyll",
-  "./assets/pages-D7KnNy9V.css",
-  "./assets/pages-DWhDsLrG.js",
+  "./assets/pages-8tKIsPNu.css",
+  "./assets/pages-CrGsBPe1.js",
   "./favicon.svg",
   "./icons/app-icon.svg",
   "./icons/apple-touch-icon.png",
